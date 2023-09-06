@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
 
 import { Box } from "@professorragna/box";
 import { Flex } from "@professorragna/flex";
@@ -27,32 +29,92 @@ export const navItems = [
   },
 ];
 
-const App = () => (
-  <Flex height="100vh">
-    <Box flex={1}>
-      <img src={logo} alt="Wellspring logo" />
+const App = () => {
+  const [patients, setPatients] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-      <List variant="ul">
-        {navItems.map((navItem) => (
-          <Li>
-            <SidebarItem iconUrl={navItem.iconUrl} label={navItem.label} />
-          </Li>
-        ))}
-      </List>
-    </Box>
-    <Box flex={4}>
-      {/* Typically, when not hard-coding, you'd access your application state to determine what user firstName to render below */}
-      <H1 fontSize="30px" color="#475467">
-        Good afternoon, Meredith!
-      </H1>
+  const fetchPatients = async () => {
+    // TODO: Handle exceptions
+    const response = await axios.get("/api/patients");
+    console.log(response);
+    return response.data;
+  };
 
-      <Flex>
-        <Widget headerText="Recent Patients"></Widget>
+  const fetchAppointments = async () => {
+    // TODO: Handle exceptions
+    const response = await axios.get("/api/appointments");
+    console.log(response);
+    return response.data;
+  };
 
-        <Widget headerText="Upcoming visits"></Widget>
-      </Flex>
-    </Box>
-  </Flex>
-);
+  useEffect(() => {
+    const getPatients = async () => {
+      const patients = await fetchPatients();
+      console.log("patients", patients);
+      setPatients(patients);
+    };
+
+    const getAppointments = async () => {
+      const appointments = await fetchAppointments();
+      setAppointments(appointments);
+    };
+
+    getPatients();
+    getAppointments();
+  }, []);
+
+  return (
+    <Flex height="100vh" p="50px">
+      <Box flex={1}>
+        <img src={logo} alt="Wellspring logo" />
+
+        <List variant="ul">
+          {navItems.map((navItem) => (
+            <Li>
+              <SidebarItem iconUrl={navItem.iconUrl} label={navItem.label} />
+            </Li>
+          ))}
+        </List>
+      </Box>
+      <Box flex={4}>
+        {/* Typically, in a production app, you'd access your application state to determine what user firstName to render below */}
+        <H1 fontSize="30px" color="#475467">
+          Good afternoon, Meredith!
+        </H1>
+
+        <Flex
+          style={{
+            // Hardcoded style here, as my external styled components don't yet support a "gap" prop
+            gap: "50px",
+          }}
+        >
+          <Widget headerText="Recent Patients">
+            {patients.length <= 0 ? (
+              <>No patients on file</>
+            ) : (
+              <>
+                {patients.map((patient) => (
+                  <>{patient.patientName}</>
+                ))}
+              </>
+            )}
+          </Widget>
+
+          <Widget headerText="Upcoming visits">
+            {appointments.length <= 0 ? (
+              <>No upcoming appointments</>
+            ) : (
+              <>
+                {appointments.map((appointment) => (
+                  <>{appointment.patientName}</>
+                ))}
+              </>
+            )}
+          </Widget>
+        </Flex>
+      </Box>
+    </Flex>
+  );
+};
 
 export default App;
