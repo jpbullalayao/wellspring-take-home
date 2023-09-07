@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@professorragna/box": "^1.0.4",
+    "@professorragna/button": "^1.0.4",
     "@professorragna/flex": "^1.0.4",
     "@professorragna/h1": "^1.0.4",
     "@professorragna/h2": "^1.0.4",

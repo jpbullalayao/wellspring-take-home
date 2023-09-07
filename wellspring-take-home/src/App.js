@@ -11,6 +11,7 @@ import logo from "./assets/logo.png";
 import "./App.css";
 
 import { Appointment } from "./components/Appointment/Appointment.tsx";
+import { Filter } from "./components/Filter/Filter.tsx";
 import { PatientItem } from "./components/PatientItem/PatientItem.tsx";
 import { Widget } from "./components/Widget/Widget.tsx";
 import { SidebarItem } from "./components/SidebarItem/SidebarItem.tsx";
@@ -45,6 +46,7 @@ const appointmentStyles = {
 const App = () => {
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
 
   const fetchPatients = async () => {
     // TODO: Handle exceptions
@@ -56,6 +58,19 @@ const App = () => {
     // TODO: Handle exceptions
     const response = await axios.get("/api/appointments");
     return response.data;
+  };
+
+  const filterAppointments = (startDate, endDate) => {
+    // TODO: Typing
+    const filtered = appointments.filter((appointment) => {
+      return (
+        appointment.appointmentDate >= startDate &&
+        appointment.appointmentDate <= endDate
+      );
+    });
+
+    // setFilteredAppointments(filtered);
+    setAppointments(filteredAppointments);
   };
 
   useEffect(() => {
@@ -124,10 +139,39 @@ const App = () => {
           </Widget>
 
           <Widget headerText="Upcoming visits">
+            <Filter
+              label="Today"
+              onClick={() => {
+                const today = new Date(Date.now()).getTime();
+                filterAppointments(today, today);
+              }}
+            />
+            <Filter
+              label="Tomorrow"
+              onClick={() => {
+                const tomorrow = new Date(
+                  Date.now() + 24 * 60 * 60 * 1000
+                ).toLocaleDateString();
+
+                filterAppointments(tomorrow, tomorrow);
+              }}
+            />
+            <Filter
+              label="This week"
+              onClick={() => {
+                const today = new Date(Date.now()).getTime();
+                const nextWeek = new Date(
+                  Date.now() + 7 * 24 * 60 * 60 * 1000
+                ).toLocaleDateString();
+
+                filterAppointments(today, nextWeek);
+              }}
+            />
+
             {appointments.length <= 0 ? (
               <>No upcoming appointments</>
             ) : (
-              <>
+              <Box>
                 {appointments.map((appointment) => (
                   <Appointment
                     time={appointment.time}
@@ -141,7 +185,7 @@ const App = () => {
                     }}
                   />
                 ))}
-              </>
+              </Box>
             )}
           </Widget>
         </Flex>
