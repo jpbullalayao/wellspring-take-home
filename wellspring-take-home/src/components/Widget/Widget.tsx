@@ -21,6 +21,6 @@ export const Widget: React.FC<Props> = ({ children, headerText }) => (
         {headerText}
       </H2>
     </Box>
-    <Box pt="30px">{children}</Box>
+    <Box pt="20px">{children}</Box>
   </Box>
 );

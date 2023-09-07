@@ -10,6 +10,7 @@ import { List, Li } from "@professorragna/list";
 import logo from "./assets/logo.png";
 import "./App.css";
 
+import { PatientItem } from "./components/PatientItem/PatientItem.tsx";
 import { Widget } from "./components/Widget/Widget.tsx";
 import { SidebarItem } from "./components/SidebarItem/SidebarItem.tsx";
 
@@ -94,7 +95,11 @@ const App = () => {
             ) : (
               <>
                 {patients.map((patient) => (
-                  <>{patient.patientName}</>
+                  <PatientItem
+                    patientName={patient.patientName}
+                    caregiverName={patient.caregiverName}
+                    visitStatus={patient.visitStatus}
+                  />
                 ))}
               </>
             )}
