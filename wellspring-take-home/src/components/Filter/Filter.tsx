@@ -1,6 +1,5 @@
 import React from "react";
 
-// import { Button } from "@professorragna/button";
 import { Button } from "../../core-components/Button/Button.tsx";
 
 interface Props {
@@ -20,6 +19,7 @@ export const Filter: React.FC<Props> = ({
     border="none"
     borderRadius="16px"
     fontSize="14px"
+    fontWeight="500"
     outline="none"
     p="4px 6px"
     bg={isActive ? "#f0f9ff" : "#f2f4f7"}

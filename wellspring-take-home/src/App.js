@@ -43,11 +43,20 @@ const appointmentStyles = {
   },
 };
 
+const AppointmentFilter = Object.freeze({
+  Today: "Today",
+  Tomorrow: "Tomorrow",
+  ThisWeek: "This Week",
+});
+
 const App = () => {
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState(
     appointments
+  );
+  const [activeAppointmentFilter, setActiveAppointmentFilter] = useState(
+    AppointmentFilter.Today
   );
 
   const fetchPatients = async () => {
@@ -142,19 +151,21 @@ const App = () => {
 
           <Widget headerText="Upcoming visits" alignSelf="flex-start">
             <Filter
-              label="Today"
+              label={AppointmentFilter.Today}
               onClick={() => {
                 const today = new Date();
                 const startOfToday = today.setHours(0, 0, 0, 0);
                 const endOfToday = today.setHours(23, 59, 59, 999);
 
                 filterAppointments(startOfToday, endOfToday);
+                setActiveAppointmentFilter(AppointmentFilter.Today);
               }}
+              isActive={activeAppointmentFilter === AppointmentFilter.Today}
               mr="10px"
             />
 
             <Filter
-              label="Tomorrow"
+              label={AppointmentFilter.Tomorrow}
               onClick={() => {
                 const today = new Date();
                 const tomorrow = new Date(today);
@@ -164,12 +175,14 @@ const App = () => {
                 const endOfTomorrow = tomorrow.setHours(23, 59, 59, 999);
 
                 filterAppointments(startOfTomorrow, endOfTomorrow);
+                setActiveAppointmentFilter(AppointmentFilter.Tomorrow);
               }}
+              isActive={activeAppointmentFilter === AppointmentFilter.Tomorrow}
               mr="10px"
             />
 
             <Filter
-              label="This week"
+              label={AppointmentFilter.ThisWeek}
               onClick={() => {
                 const today = new Date();
                 const startOfToday = today.setHours(0, 0, 0, 0);
@@ -180,7 +193,9 @@ const App = () => {
                 const endOfNextWeek = nextWeek.setHours(23, 59, 59, 999);
 
                 filterAppointments(startOfToday, endOfNextWeek);
+                setActiveAppointmentFilter(AppointmentFilter.ThisWeek);
               }}
+              isActive={activeAppointmentFilter === AppointmentFilter.ThisWeek}
             />
 
             {filteredAppointments.length <= 0 ? (
