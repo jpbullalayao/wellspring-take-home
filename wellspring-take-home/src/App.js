@@ -10,6 +10,7 @@ import { List, Li } from "@professorragna/list";
 import logo from "./assets/logo.png";
 import "./App.css";
 
+import { Appointment } from "./components/Appointment/Appointment.tsx";
 import { PatientItem } from "./components/PatientItem/PatientItem.tsx";
 import { Widget } from "./components/Widget/Widget.tsx";
 import { SidebarItem } from "./components/SidebarItem/SidebarItem.tsx";
@@ -30,6 +31,17 @@ export const navItems = [
   },
 ];
 
+const appointmentStyles = {
+  Telehealth: {
+    detailsBg: "#36bffa",
+    locationColor: "#026aa2",
+  },
+  "In-person": {
+    detailsBg: "#bdb4fe",
+    locationColor: "#6938ef",
+  },
+};
+
 const App = () => {
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
@@ -37,14 +49,12 @@ const App = () => {
   const fetchPatients = async () => {
     // TODO: Handle exceptions
     const response = await axios.get("/api/patients");
-    console.log(response);
     return response.data;
   };
 
   const fetchAppointments = async () => {
     // TODO: Handle exceptions
     const response = await axios.get("/api/appointments");
-    console.log(response);
     return response.data;
   };
 
@@ -111,7 +121,17 @@ const App = () => {
             ) : (
               <>
                 {appointments.map((appointment) => (
-                  <>{appointment.patientName}</>
+                  <Appointment
+                    time={appointment.time}
+                    patientName={appointment.patientName}
+                    appointmentName={appointment.appointmentName}
+                    appointmentDescription={appointment.appointmentDescription}
+                    appointmentType={appointment.appointmentType}
+                    styleProps={{
+                      mb: "15px",
+                      ...appointmentStyles[appointment.appointmentType],
+                    }}
+                  />
                 ))}
               </>
             )}

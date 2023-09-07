@@ -41,10 +41,10 @@ export const PatientItem = ({
     {...props}
   >
     <Box>
-      <Box color="#475467" fontWeight="700">
+      <Box color="#475467" fontSize="14px" fontWeight="700">
         {patientName}
       </Box>
-      <Box color="#667085" mt="10px">
+      <Box color="#667085" fontSize="14px" mt="10px">
         {caregiverName}
       </Box>
     </Box>

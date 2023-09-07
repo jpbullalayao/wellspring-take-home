@@ -8,6 +8,7 @@
     "@professorragna/flex": "^1.0.4",
     "@professorragna/h1": "^1.0.4",
     "@professorragna/h2": "^1.0.4",
+    "@professorragna/image": "^1.0.4",
     "@professorragna/list": "^1.0.4",
     "@professorragna/span": "^1.0.4",
     "@testing-library/jest-dom": "^5.16.5",
