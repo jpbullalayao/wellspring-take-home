@@ -49,12 +49,6 @@ const App = () => {
   const [filteredAppointments, setFilteredAppointments] = useState(
     appointments
   );
-  // const [appointmentFilter, setAppointmentFilter] = useState(() => {
-  //   // return () => {
-  //   //   return [];
-  //   // };
-  //   return appointments;
-  // });
 
   const fetchPatients = async () => {
     // TODO: Handle exceptions
@@ -130,7 +124,7 @@ const App = () => {
             gap: "50px",
           }}
         >
-          <Widget headerText="Recent Patients">
+          <Widget headerText="Recent Patients" alignSelf="flex-start">
             {patients.length <= 0 ? (
               <>No patients on file</>
             ) : (
@@ -146,7 +140,7 @@ const App = () => {
             )}
           </Widget>
 
-          <Widget headerText="Upcoming visits">
+          <Widget headerText="Upcoming visits" alignSelf="flex-start">
             <Filter
               label="Today"
               onClick={() => {
@@ -156,7 +150,9 @@ const App = () => {
 
                 filterAppointments(startOfToday, endOfToday);
               }}
+              mr="10px"
             />
+
             <Filter
               label="Tomorrow"
               onClick={() => {
@@ -169,7 +165,9 @@ const App = () => {
 
                 filterAppointments(startOfTomorrow, endOfTomorrow);
               }}
+              mr="10px"
             />
+
             <Filter
               label="This week"
               onClick={() => {
@@ -188,7 +186,7 @@ const App = () => {
             {filteredAppointments.length <= 0 ? (
               <>No upcoming appointments</>
             ) : (
-              <Box>
+              <Box mt="30px">
                 {filteredAppointments.map((appointment) => (
                   <Appointment
                     time={appointment.time}
