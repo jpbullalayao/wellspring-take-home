@@ -101,7 +101,7 @@ const App = () => {
   }, []);
 
   return (
-    <Flex height="100vh" p="50px">
+    <Flex minHeight="100vh" p="50px">
       <Box flex={1}>
         <img src={logo} alt="Wellspring logo" />
 
@@ -109,13 +109,16 @@ const App = () => {
           {navItems.map((navItem) => (
             <Li
               style={{
+                // Hardcoded style here, as my external styled components don't yet support a "listStyleType" prop
                 listStyleType: "none",
               }}
             >
               <SidebarItem
                 isActive
+                iconAlt={navItem.iconAlt}
                 iconUrl={navItem.iconUrl}
                 label={navItem.label}
+                mb="10px"
               />
             </Li>
           ))}
