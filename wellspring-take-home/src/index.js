@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+
+import { Layout } from "./components/Layout/Layout.tsx";
+
+import { Home } from "./pages/Home/Home.tsx";
 import { Patients } from "./pages/Patients/Patients.tsx";
 import reportWebVitals from "./reportWebVitals";
 
@@ -10,12 +14,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Layout />,
+    children: [
+      {
+        path: "/patients",
+        element: <Patients />,
+      },
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
-  {
-    path: "/patients",
-    element: <Patients />,
-  },
+  // {
+  //   path: "/patients",
+  //   element: <Patients />,
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

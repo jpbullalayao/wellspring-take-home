@@ -1,9 +1,9 @@
 import React from "react";
 
-import { H1 } from "@professorragna/h1";
+import { PageTitle } from "../../components/PageTitle/PageTitle.tsx";
 
 export const Patients = () => (
   <>
-    <H1>Patients</H1>
+    <PageTitle title="Patients" />
   </>
 );
