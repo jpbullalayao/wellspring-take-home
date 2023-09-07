@@ -46,7 +46,15 @@ const appointmentStyles = {
 const App = () => {
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
-  const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState(
+    appointments
+  );
+  // const [appointmentFilter, setAppointmentFilter] = useState(() => {
+  //   // return () => {
+  //   //   return [];
+  //   // };
+  //   return appointments;
+  // });
 
   const fetchPatients = async () => {
     // TODO: Handle exceptions
@@ -60,17 +68,16 @@ const App = () => {
     return response.data;
   };
 
-  const filterAppointments = (startDate, endDate) => {
+  const filterAppointments = (startTime, endTime) => {
     // TODO: Typing
     const filtered = appointments.filter((appointment) => {
       return (
-        appointment.appointmentDate >= startDate &&
-        appointment.appointmentDate <= endDate
+        new Date(appointment.appointmentDate).getTime() >= startTime &&
+        new Date(appointment.appointmentDate).getTime() <= endTime
       );
     });
 
-    // setFilteredAppointments(filtered);
-    setAppointments(filteredAppointments);
+    setFilteredAppointments(filtered);
   };
 
   useEffect(() => {
@@ -83,6 +90,7 @@ const App = () => {
     const getAppointments = async () => {
       const appointments = await fetchAppointments();
       setAppointments(appointments);
+      setFilteredAppointments(appointments);
     };
 
     getPatients();
@@ -142,37 +150,46 @@ const App = () => {
             <Filter
               label="Today"
               onClick={() => {
-                const today = new Date(Date.now()).getTime();
-                filterAppointments(today, today);
+                const today = new Date();
+                const startOfToday = today.setHours(0, 0, 0, 0);
+                const endOfToday = today.setHours(23, 59, 59, 999);
+
+                filterAppointments(startOfToday, endOfToday);
               }}
             />
             <Filter
               label="Tomorrow"
               onClick={() => {
-                const tomorrow = new Date(
-                  Date.now() + 24 * 60 * 60 * 1000
-                ).toLocaleDateString();
+                const today = new Date();
+                const tomorrow = new Date(today);
+                tomorrow.setDate(today.getDate() + 1);
 
-                filterAppointments(tomorrow, tomorrow);
+                const startOfTomorrow = tomorrow.setHours(0, 0, 0, 0);
+                const endOfTomorrow = tomorrow.setHours(23, 59, 59, 999);
+
+                filterAppointments(startOfTomorrow, endOfTomorrow);
               }}
             />
             <Filter
               label="This week"
               onClick={() => {
-                const today = new Date(Date.now()).getTime();
-                const nextWeek = new Date(
-                  Date.now() + 7 * 24 * 60 * 60 * 1000
-                ).toLocaleDateString();
+                const today = new Date();
+                const startOfToday = today.setHours(0, 0, 0, 0);
 
-                filterAppointments(today, nextWeek);
+                const nextWeek = new Date(today);
+                nextWeek.setDate(today.getDate() + 7);
+
+                const endOfNextWeek = nextWeek.setHours(23, 59, 59, 999);
+
+                filterAppointments(startOfToday, endOfNextWeek);
               }}
             />
 
-            {appointments.length <= 0 ? (
+            {filteredAppointments.length <= 0 ? (
               <>No upcoming appointments</>
             ) : (
               <Box>
-                {appointments.map((appointment) => (
+                {filteredAppointments.map((appointment) => (
                   <Appointment
                     time={appointment.time}
                     patientName={appointment.patientName}
