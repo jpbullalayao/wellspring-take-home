@@ -24,11 +24,13 @@ export const navItems = [
     iconAlt: "Home icon",
     iconUrl: iconHome,
     label: "Home",
+    route: "/",
   },
   {
     iconAlt: "Patients icon",
     iconUrl: iconPatients,
     label: "Patients",
+    route: "/patients",
   },
 ];
 
@@ -58,6 +60,7 @@ const App = () => {
   const [activeAppointmentFilter, setActiveAppointmentFilter] = useState(
     AppointmentFilter.Today
   );
+  // const [activePage, setActivePage] = useState("Home");
 
   const fetchPatients = async () => {
     // TODO: Handle exceptions
@@ -118,6 +121,7 @@ const App = () => {
                 iconAlt={navItem.iconAlt}
                 iconUrl={navItem.iconUrl}
                 label={navItem.label}
+                route={navItem.route}
                 mb="10px"
               />
             </Li>
