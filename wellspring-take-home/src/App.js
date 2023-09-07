@@ -79,18 +79,26 @@ const App = () => {
       <Box flex={1}>
         <img src={logo} alt="Wellspring logo" />
 
-        <List variant="ul">
+        <List variant="ul" mt="50px">
           {navItems.map((navItem) => (
-            <Li>
-              <SidebarItem iconUrl={navItem.iconUrl} label={navItem.label} />
+            <Li
+              style={{
+                listStyleType: "none",
+              }}
+            >
+              <SidebarItem
+                isActive
+                iconUrl={navItem.iconUrl}
+                label={navItem.label}
+              />
             </Li>
           ))}
         </List>
       </Box>
-      <Box flex={4}>
+      <Box flex={4} pl="50px">
         {/* Typically, in a production app, you'd access your application state to determine what user firstName to render below */}
         <H1 fontSize="30px" color="#475467">
-          Good afternoon, Meredith!
+          Good afternoon, Dwight!
         </H1>
 
         <Flex
