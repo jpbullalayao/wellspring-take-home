@@ -117,7 +117,6 @@ const App = () => {
               }}
             >
               <SidebarItem
-                isActive
                 iconAlt={navItem.iconAlt}
                 iconUrl={navItem.iconUrl}
                 label={navItem.label}

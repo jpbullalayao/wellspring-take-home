@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import { Flex } from "@professorragna/flex";
 import { Span } from "@professorragna/span";
@@ -8,7 +8,6 @@ import { Span } from "@professorragna/span";
 interface Props {
   iconAlt: string;
   iconUrl: string;
-  isActive: boolean;
   label: string;
   route: string;
 }
@@ -16,22 +15,30 @@ interface Props {
 export const SidebarItem: React.FC<Props> = ({
   iconAlt,
   iconUrl,
-  isActive,
   label,
   route,
   ...props
 }) => (
-  <Link
+  <NavLink
     to={route}
-    // Hardcoded style prop here as react-router-dom Link isn't a styled component
-    style={{
-      color: isActive ? "#3f728d" : "",
-      textDecoration: "none",
+    style={({ isActive }) => {
+      return {
+        color: isActive ? "#3f728d" : "",
+        textDecoration: "none",
+      };
     }}
   >
-    <Flex borderRadius="8px" p="15px" bg={isActive ? "#daf1ff" : ""} {...props}>
-      <img src={iconUrl} alt={iconAlt} />
-      <Span ml="15px">{label}</Span>
-    </Flex>
-  </Link>
+    {/* Built-in children prop for NavLink allows us to style the active link however we like */}
+    {({ isActive }) => (
+      <Flex
+        borderRadius="8px"
+        p="15px"
+        bg={isActive ? "#daf1ff" : ""}
+        {...props}
+      >
+        <img src={iconUrl} alt={iconAlt} />
+        <Span ml="15px">{label}</Span>
+      </Flex>
+    )}
+  </NavLink>
 );
