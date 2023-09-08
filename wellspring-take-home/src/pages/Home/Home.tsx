@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { NavLink, Link } from "react-router-dom";
 import axios from "axios";
 
 import { Box } from "@professorragna/box";
@@ -65,6 +66,13 @@ export const Home = () => {
   useEffect(() => {
     const getPatients = async () => {
       const patients = await fetchPatients();
+
+      // Sort patients by most recent check-in
+      patients.sort(
+        (a, b) =>
+          new Date(a.lastCheckIn).getTime() + new Date(b.lastCheckIn).getTime()
+      );
+
       setPatients(patients);
     };
 
@@ -89,7 +97,22 @@ export const Home = () => {
           gap: "50px",
         }}
       >
-        <Widget headerText="Recent Patients" alignSelf="flex-start">
+        <Widget
+          actions={
+            <NavLink
+              to="/patients"
+              style={{
+                color: "#667085",
+                fontSize: "12px",
+                textDecoration: "none",
+              }}
+            >
+              View all
+            </NavLink>
+          }
+          headerText="Recent Patients"
+          alignSelf="flex-start"
+        >
           {patients.length <= 0 ? (
             <>No patients on file</>
           ) : (
