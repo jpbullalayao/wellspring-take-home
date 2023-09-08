@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { NavLink, Link } from "react-router-dom";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 import { Box } from "@professorragna/box";
 import { Flex } from "@professorragna/flex";
@@ -11,6 +10,8 @@ import { Filter } from "../../components/Filter/Filter.tsx";
 import { PageTitle } from "../../components/PageTitle/PageTitle.tsx";
 import { PatientItem } from "../../components/PatientItem/PatientItem.tsx";
 import { Widget } from "../../components/Widget/Widget.tsx";
+
+import { useData } from "../../hooks/useData/useData.ts";
 
 const appointmentStyles = {
   Telehealth: {
@@ -30,8 +31,9 @@ const AppointmentFilter = Object.freeze({
 });
 
 export const Home = () => {
-  const [patients, setPatients] = useState([]);
-  const [appointments, setAppointments] = useState([]);
+  const patients = useData("/api/patients");
+  const appointments = useData("/api/appointments");
+
   const [filteredAppointments, setFilteredAppointments] = useState(
     appointments
   );
@@ -39,20 +41,7 @@ export const Home = () => {
     AppointmentFilter.Today
   );
 
-  const fetchPatients = async () => {
-    // TODO: Handle exceptions
-    const response = await axios.get("/api/patients");
-    return response.data;
-  };
-
-  const fetchAppointments = async () => {
-    // TODO: Handle exceptions
-    const response = await axios.get("/api/appointments");
-    return response.data;
-  };
-
-  const filterAppointments = (startTime, endTime) => {
-    // TODO: Typing
+  const filterAppointments = (startTime: number, endTime: number) => {
     const filtered = appointments.filter((appointment) => {
       return (
         new Date(appointment.appointmentDate).getTime() >= startTime &&
@@ -64,27 +53,8 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    const getPatients = async () => {
-      const patients = await fetchPatients();
-
-      // Sort patients by most recent check-in
-      patients.sort(
-        (a, b) =>
-          new Date(a.lastCheckIn).getTime() + new Date(b.lastCheckIn).getTime()
-      );
-
-      setPatients(patients);
-    };
-
-    const getAppointments = async () => {
-      const appointments = await fetchAppointments();
-      setAppointments(appointments);
-      setFilteredAppointments(appointments);
-    };
-
-    getPatients();
-    getAppointments();
-  }, []);
+    setFilteredAppointments(appointments);
+  }, [appointments]);
 
   return (
     <>
@@ -177,25 +147,27 @@ export const Home = () => {
             isActive={activeAppointmentFilter === AppointmentFilter.ThisWeek}
           />
 
-          {filteredAppointments.length <= 0 ? (
-            <>No upcoming appointments</>
-          ) : (
-            <Box mt="30px">
-              {filteredAppointments.map((appointment) => (
-                <Appointment
-                  time={appointment.time}
-                  patientName={appointment.patientName}
-                  appointmentName={appointment.appointmentName}
-                  appointmentDescription={appointment.appointmentDescription}
-                  appointmentType={appointment.appointmentType}
-                  styleProps={{
-                    mb: "15px",
-                    ...appointmentStyles[appointment.appointmentType],
-                  }}
-                />
-              ))}
-            </Box>
-          )}
+          <Box mt="30px">
+            {filteredAppointments.length <= 0 ? (
+              <>No upcoming appointments</>
+            ) : (
+              <>
+                {filteredAppointments.map((appointment) => (
+                  <Appointment
+                    time={appointment.time}
+                    patientName={appointment.patientName}
+                    appointmentName={appointment.appointmentName}
+                    appointmentDescription={appointment.appointmentDescription}
+                    appointmentType={appointment.appointmentType}
+                    styleProps={{
+                      mb: "15px",
+                      ...appointmentStyles[appointment.appointmentType],
+                    }}
+                  />
+                ))}
+              </>
+            )}
+          </Box>
         </Widget>
       </Flex>
     </>
