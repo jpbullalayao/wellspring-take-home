@@ -34,14 +34,12 @@ export const Home = () => {
   const patients = useData("/api/patients");
   const appointments = useData("/api/appointments");
 
-  const [filteredAppointments, setFilteredAppointments] = useState(
-    appointments
-  );
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [activeAppointmentFilter, setActiveAppointmentFilter] = useState(
     AppointmentFilter.Today
   );
 
-  const filterAppointments = (startTime: number, endTime: number) => {
+  const getFilterAppointments = (startTime: number, endTime: number) => {
     const filtered = appointments.filter((appointment) => {
       return (
         new Date(appointment.appointmentDate).getTime() >= startTime &&
@@ -49,10 +47,21 @@ export const Home = () => {
       );
     });
 
-    setFilteredAppointments(filtered);
+    return filtered;
+  };
+
+  const isActiveFilter = (filter: string) => activeAppointmentFilter === filter;
+
+  const getTodayAppointments = () => {
+    const today = new Date();
+    const startOfToday = today.setHours(0, 0, 0, 0);
+    const endOfToday = today.setHours(23, 59, 59, 999);
+
+    return getFilterAppointments(startOfToday, endOfToday);
   };
 
   useEffect(() => {
+    const appointments = getTodayAppointments();
     setFilteredAppointments(appointments);
   }, [appointments]);
 
@@ -102,20 +111,25 @@ export const Home = () => {
           <Filter
             label={AppointmentFilter.Today}
             onClick={() => {
-              const today = new Date();
-              const startOfToday = today.setHours(0, 0, 0, 0);
-              const endOfToday = today.setHours(23, 59, 59, 999);
+              if (isActiveFilter(AppointmentFilter.Today)) {
+                return;
+              }
 
-              filterAppointments(startOfToday, endOfToday);
+              const appointments = getTodayAppointments();
+              setFilteredAppointments(appointments);
               setActiveAppointmentFilter(AppointmentFilter.Today);
             }}
-            isActive={activeAppointmentFilter === AppointmentFilter.Today}
+            isActive={isActiveFilter(AppointmentFilter.Today)}
             mr="10px"
           />
 
           <Filter
             label={AppointmentFilter.Tomorrow}
             onClick={() => {
+              if (isActiveFilter(AppointmentFilter.Tomorrow)) {
+                return;
+              }
+
               const today = new Date();
               const tomorrow = new Date(today);
               tomorrow.setDate(today.getDate() + 1);
@@ -123,16 +137,24 @@ export const Home = () => {
               const startOfTomorrow = tomorrow.setHours(0, 0, 0, 0);
               const endOfTomorrow = tomorrow.setHours(23, 59, 59, 999);
 
-              filterAppointments(startOfTomorrow, endOfTomorrow);
+              const appointments = getFilterAppointments(
+                startOfTomorrow,
+                endOfTomorrow
+              );
+              setFilteredAppointments(appointments);
               setActiveAppointmentFilter(AppointmentFilter.Tomorrow);
             }}
-            isActive={activeAppointmentFilter === AppointmentFilter.Tomorrow}
+            isActive={isActiveFilter(AppointmentFilter.Tomorrow)}
             mr="10px"
           />
 
           <Filter
             label={AppointmentFilter.ThisWeek}
             onClick={() => {
+              if (isActiveFilter(AppointmentFilter.ThisWeek)) {
+                return;
+              }
+
               const today = new Date();
               const startOfToday = today.setHours(0, 0, 0, 0);
 
@@ -141,10 +163,14 @@ export const Home = () => {
 
               const endOfNextWeek = nextWeek.setHours(23, 59, 59, 999);
 
-              filterAppointments(startOfToday, endOfNextWeek);
+              const appointments = getFilterAppointments(
+                startOfToday,
+                endOfNextWeek
+              );
+              setFilteredAppointments(appointments);
               setActiveAppointmentFilter(AppointmentFilter.ThisWeek);
             }}
-            isActive={activeAppointmentFilter === AppointmentFilter.ThisWeek}
+            isActive={isActiveFilter(AppointmentFilter.ThisWeek)}
           />
 
           <Box mt="30px">
