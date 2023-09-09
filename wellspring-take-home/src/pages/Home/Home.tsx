@@ -13,6 +13,9 @@ import { Widget } from "../../components/Widget/Widget.tsx";
 
 import { useData } from "../../hooks/useData/useData.ts";
 
+import { Patient } from "../../interfaces/api/patient/patient.ts";
+import { Appointment as AppointmentInterface } from "../../interfaces/api/appointment/appointment.ts";
+
 const appointmentStyles = {
   Telehealth: {
     detailsBg: "#36bffa",
@@ -31,13 +34,16 @@ const AppointmentFilter = Object.freeze({
 });
 
 export const Home = () => {
-  const patients = useData("/api/patients");
-  const appointments = useData("/api/appointments");
+  const patients: Patient[] = useData("/api/patients");
+  const appointments: AppointmentInterface[] = useData("/api/appointments");
 
-  const [filteredAppointments, setFilteredAppointments] = useState([]);
-  const [activeAppointmentFilter, setActiveAppointmentFilter] = useState(
-    AppointmentFilter.Today
-  );
+  const [filteredAppointments, setFilteredAppointments] = useState<
+    Appointment[]
+  >([]);
+  const [
+    activeAppointmentFilter,
+    setActiveAppointmentFilter,
+  ] = useState<string>(AppointmentFilter.Today);
 
   const getFilterAppointments = (startTime: number, endTime: number) => {
     const filtered = appointments.filter((appointment) => {

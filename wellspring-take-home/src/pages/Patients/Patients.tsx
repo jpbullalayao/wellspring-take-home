@@ -5,9 +5,10 @@ import { PatientItem } from "../../components/PatientItem/PatientItem.tsx";
 import { Widget } from "../../components/Widget/Widget.tsx";
 
 import { useData } from "../../hooks/useData/useData.ts";
+import { Patient } from "../../interfaces/api/patient/patient.ts";
 
 export const Patients = () => {
-  const patients = useData("/api/patients");
+  const patients: Patient[] = useData("/api/patients");
 
   return (
     <>
