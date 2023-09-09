@@ -27,6 +27,8 @@ Before using vanilla-extract-css for this project, I originally used [styled-com
 2. axios (for Network requests to fetch Patient & Appointment info)
 3. React Hooks (for side effects like making Network Requests)
 
+In terms of responsiveness, the UI project has been built to be supported on desktop, as well as mobile screen sizes that are similar to iPhone 12 Pro.
+
 ## Improvements
 
 Assuming that this were to be a full production application, there are improvements / additions that could be made to the project. Some of this includes:
