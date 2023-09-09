@@ -14,7 +14,12 @@ export const Patients = () => {
     <>
       <PageTitle title="Patients" />
 
-      <Widget headerText="All Patients" alignSelf="flex-start">
+      <Widget
+        headerText="All Patients"
+        style={{
+          alignSelf: "flex-start",
+        }}
+      >
         {patients.length <= 0 ? (
           <>No patients on file</>
         ) : (

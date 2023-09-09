@@ -1,10 +1,6 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { Outlet } from "react-router-dom";
-
-import { Box } from "@professorragna/box";
-import { Flex } from "@professorragna/flex";
-import { List, Li } from "@professorragna/list";
 
 import logo from "../../assets/logo.png";
 import iconHome from "../../assets/icon-home.svg";
@@ -12,9 +8,9 @@ import iconPatients from "../../assets/icon-patients.svg";
 
 import { SidebarItem } from "../SidebarItem/SidebarItem.tsx";
 
-interface Props {
-  children: ReactNode;
-}
+import { main, list, listItem, rightContainer } from "./Layout.css.ts";
+
+interface Props {}
 
 export const navItems = [
   {
@@ -31,32 +27,33 @@ export const navItems = [
   },
 ];
 
-export const Layout: React.FC<Props> = ({ children }) => (
-  <Flex minHeight="100vh" p="50px">
-    <Box flex={1}>
+export const Layout: React.FC<Props> = () => (
+  <div className={main}>
+    <div
+      style={{
+        flex: 1,
+      }}
+    >
       <img src={logo} alt="Wellspring logo" />
 
-      <List variant="ul" mt="50px">
+      <ul className={list}>
         {navItems.map((navItem) => (
-          <Li
-            style={{
-              // Hardcoded style here, as my external styled components don't yet support a "listStyleType" prop
-              listStyleType: "none",
-            }}
-          >
+          <li className={listItem}>
             <SidebarItem
               iconAlt={navItem.iconAlt}
               iconUrl={navItem.iconUrl}
               label={navItem.label}
               route={navItem.route}
-              mb="10px"
+              style={{
+                marginBottom: "10px",
+              }}
             />
-          </Li>
+          </li>
         ))}
-      </List>
-    </Box>
-    <Box flex={4} pl="50px">
+      </ul>
+    </div>
+    <div className={rightContainer}>
       <Outlet />
-    </Box>
-  </Flex>
+    </div>
+  </div>
 );

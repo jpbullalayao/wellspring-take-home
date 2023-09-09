@@ -1,19 +1,13 @@
 import React from "react";
 
-import { Box } from "@professorragna/box";
+import { main } from "./Badge.css.ts";
 
 interface Props {
   label: string;
 }
 
 export const Badge: React.FC<Props> = ({ label, ...props }) => (
-  <Box
-    borderRadius="16px"
-    fontSize="12px"
-    fontWeight="500"
-    p="4px 6px"
-    {...props}
-  >
+  <div className={main} {...props}>
     {label}
-  </Box>
+  </div>
 );
