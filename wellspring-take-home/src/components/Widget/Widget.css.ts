@@ -9,6 +9,7 @@ export const main = style({
 });
 
 export const headerContainer = style({
+  alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
   borderBottom: "3px solid #e0f2fe",
