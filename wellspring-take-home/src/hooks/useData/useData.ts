@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
+/**
+ * A custom hook that is used to GET data from an API endpoint when
+ * given a proper URL endpoint.
+ *
+ * @param {string} url - The endpoint we are fetching data from
+ */
 export const useData = (url: string) => {
   const [data, setData] = useState([]);
 
