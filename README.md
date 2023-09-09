@@ -57,7 +57,7 @@ import { Badge } from "@/components/Badge";
 
 ### 2. Analytics & Monitoring Tools (Sentry, Segment, etc) Configuration
 
-At the moment, there are no analytics and production monitoring tools setup for the project. There are multiple tools that can be used for this,
+At the moment, there are no analytics and production monitoring tools setup for the project. There are multiple tools that can be used for this.
 
 For production monitoring, we could setup [Sentry](https://sentry.io/) on the project so that we can catch JavaScript errors in a production environment. For tracking user activity and how flows perform in the project, we could setup something like [Segment](https://segment.com/) for event and other data tracking.
 
