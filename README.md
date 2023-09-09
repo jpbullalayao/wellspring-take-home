@@ -1,89 +1,78 @@
 # Wellspring Electronic Health Record System
 
-### Introduction
-At Wellspring, we’re building tools to supercharge our families’ ability to provide care throughout their journey with us. Whether it’s through training or care, we’re here to tackle the bottlenecks that affect our families’ experience.
+## Implementation Details
 
-This project aims to build a front-end web experience for our electronic health record system. The interface will help our clinical team to easily access patient data and track how to best support our families.
+**This project utilizes the following technologies:**
 
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/24286181/233230738-f1d03f3c-0438-485f-aa31-01dfd9a3b0cb.png">
+1. React
+2. TypeScript (tsconfig not setup, but TS syntax was used)
+3. A personal [styled-components UI library](https://github.com/jpbullalayao/ragna-lerna) to build out and style the necessary UI
 
-### Features
-* Side navigation panel
-* Recent patients table
-* Upcoming visits table
+Using [styled-components](https://styled-components.com) + [styled-system](https://github.com/styled-system/styled-system) to build the UI is a personal preference for my own projects, as it has been much easier and faster to build complex UIs by using a CSS-in-JS solution. However, I am fully experienced with pure HTML/CSS solutions where the styles would be in their own separate `.css` files for each component. Should Wellspring use a pure CSS solution in their projects, I would easily be able to work within that as well.
 
-### Getting Started
-1. Clone this repository to your local machine
-2. cd into wellspring-take-home
-3. Run npm install to install the necessary dependencies
-4. Run npm start to start the application
-5. Open your web browser and navigate to http://localhost:3000 to view the application
+**This project uses the following note-worthy libraries / concepts as part of the implementation:**
 
-### API Endpoints
-This project comes with two API endpoints that you can use to fetch data for your front-end application:
+1. react-router-dom (for page routing between the Home Page and Patients pages)
+2. axios (for Network requests to fetch Patient & Appointment info)
+3. React Hooks (for side effects like making Network Requests)
 
-* GET `/api/patients`
-Returns an array of patients.
+## Improvements
 
-* GET `/api/appointments`
-Returns an array of appointments.
+Assuming that this were to be a full production application, there improvements / additions that could be made to the project. Some of this includes:
 
-### Typescript (Optional)
+**1. Path alias imports**
+At the moment, components and assets are currently imported with relative paths, such as:
 
-This project was originally built using JavaScript, but candidates are free to add TypeScript to the existing codebase. To do so, simply run the following command in your terminal:
-
-```npm install --save-dev typescript```
-
-After installing TypeScript, create a tsconfig.json file in the root directory of your project with the following configuration:
-
-```json{
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "strict": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "sourceMap": true
-  },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
-}
+```jsx
+import { Badge } from "../Badge/Badge.tsx";
 ```
 
-### Technologies
-* React.js
-* HTML/CSS
+The problem with this is that there are unnecessary keystrokes to import the Badge component, as it's currently requiring us to import the file directly with its `.tsx` extension.
 
-### Design Assets
-Link to Figma design: (https://www.figma.com/file/oUQ510tObMV24neUboZKuD/Take-home-Design-V2.0?node-id=0-1&t=RT5tZiHAUQTip1rw-0)
+To fix this, it is possible to setup a tsconfig.json to include a config like the following:
 
-Link to download the assets is here (optional): https://drive.google.com/file/d/1-Gi7yLZMxclh_ld8M3LTSQkfExkzKBLl/view?usp=sharing
+```jsx
+"paths": {
+	"@/*": ["src/*"]
+},
+```
 
-## Frequently Asked Questions (FAQ)
+By doing this, all imports to any necessary files become easier and more readable from a developer experience:
 
-**Q: How should the coding challenge be submitted?**. 
-* Zip the directory containing your code and email the zipped file to stefan@withwellspring.com.
-* Alternatively, you can create a public repository and share the repository URL with stefan@withwellspring.com.
+```jsx
+import { Badge } from "@/components/Badge";
+```
 
-**Q: Do you have renders for the kebab menu on the appointments table?**
-* No, you don't need to worry about implementing an interaction for the kebab menu on the appointments table. Clicking on the menu should not trigger any action or behavior.
+**2. Analytics & Monitoring Tools (Sentry, Segment, etc) Configuration**
+At the moment, there are no analytics and production monitoring tools setup for the project. There are multiple tools that can be used for this,
 
-**Q: Will the tabs under Upcoming visits be functional?**. 
-* Yes, the tabs (Today, Tomorrow, This week) should be fully functional. They should filter the upcoming visits based on the selected day. You can choose a random date as the "today" date to build upon.
+For production monitoring, we could setup [Sentry](https://sentry.io/) on the project so that we can catch JavaScript errors in a production environment. For tracking user activity and how flows perform in the project, we could setup something like [Segment](https://segment.com/) for event and other data tracking.
 
-**Q: Will the side navigation tabs be functional? Should clicking on the Patients tab bring up a list of patients?**. 
-* While there is no specific requirement for a patients page, it is expected that the side navigation tabs change the state and/or route away from the home page. You have flexibility in implementing the behavior and appearance of the patients page.
+**3. Usage of theme libraries**
+Ideally, engineers and designers should be working off the same UI brand guidelines, and there are ways to set up a theme that engineers can easily build their UIs with.
 
-**Q: If I click the "View all" tab in the Recent Patients section, should it bring up the same page as the "Patients" button?**. 
-* Yes, clicking the "View all" tab in the Recent Patients section should navigate to the same page as the "Patients" button. However, the design and content of this page are not specified, and it can be left blank or simply display a title such as "Patients" for the purpose of this take-home project.
+As an example, we can create a theme object containing all the necessary colors and reference them by color names when building the UI (ex: `Gray/500` in the Figma, `gray-500` in the code), like how they are specified in the given Figma design. This would also help easily build light theme and dark theme versions of our application.
 
-**Q: Can I use libraries or other technologies?**. 
-* Absolutely! We encourage you to use any libraries or technologies that you are comfortable with and that will help you showcase your skills effectively in completing the assessment.
+**4. More Test Coverage**
+React Testing Library was automatically setup with this project, and a few test cases were added to some of the components like `Badge.tsx` and `PageTitle.tsx`. The project does not contain a comprehensive test suite, however if time permitted, we could add test coverage for all the components.
 
-Note: We understand that not every detail may be fully provided, mimicking a real-world front-end engineering scenario where you may need to take the initiative to provide the optimal user experience. Feel free to demonstrate your problem-solving skills and make informed decisions to enhance the usability and functionality of the application.
+For full comprehensive end-to-end testing, we could integrate a tool like [Cypress](https://www.cypress.io/).
 
-If you have any additional questions, please do not hesitate to reach out to stefan@withwellspring.com.
+**5. Gitlab CI / CD Pipeline**
+One of the benefits that CI pipelines helps with is ensuring that engineers / release managers don't merge PRs that broke unit and integration tests. At the same time, it saves manual steps that engineers have to do in order to deploy code. In the most basic terms, it ensures that features are deployed to production as easily, organized and quickly as possible, and also gives us confidence that we're deploying features that are as bug-free as they possibly can be.
+
+**6. Pre-commit hooks (like husky)**
+
+Source: [https://github.com/typicode/husky](https://github.com/typicode/husky)
+
+This would help with ensuring that we're able to enforce Wellspring-specific coding guidelines onto the engineers, which means that the highest-quality code possible is committed to the codebase only (provided that an engineer doesn't commit with the `--no-verify` flag).
+
+**7. Eslint Rules & Prettier IDE setup**
+
+Eslinting tools are helpful for the codebase because again, it ensures that we enforce specific code guidelines for a long-term resilient and predictable code-base. An example of an eslint rule we can consider is the `react/jsx-max-props-per-line` rule, which helps us enforce that props should be specified on separate lines. There is also a Prettier extension that we can configure on an IDE like Visual Studio Code to further enforce a consistent coding style.
+
+Other worthy eslint rules: `react-hooks/rules-of-hooks`, `react-hooks/exhaustive-deps`, etc.
+
+# Contact
+
+For any questions, please feel free to contact me at jpbullalayao@gmail.com. Thank you!
