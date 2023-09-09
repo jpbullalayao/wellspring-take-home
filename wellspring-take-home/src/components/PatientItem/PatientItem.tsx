@@ -2,9 +2,8 @@ import React from "react";
 
 import { Box } from "@professorragna/box";
 import { Flex } from "@professorragna/flex";
-import { Span } from "@professorragna/span";
 
-import { Badge } from "../Badge/Badge.tsx"; // TODO
+import { Badge } from "../Badge/Badge.tsx";
 
 interface Props {
   patientName: string;
@@ -27,7 +26,7 @@ const badgeStyles = {
   },
 };
 
-export const PatientItem = ({
+export const PatientItem: React.FC<Props> = ({
   patientName,
   caregiverName,
   visitStatus,

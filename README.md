@@ -1,5 +1,16 @@
 # Wellspring Electronic Health Record System
 
+## Setup
+
+```
+$ git clone git@github.com:jpbullalayao/wellspring-take-home.git
+$ cd wellspring-take-home/wellspring-take-home
+$ npm i
+$ npm start
+```
+
+Afterwards, open your web browser and navigate to http://localhost:3000 to view the application.
+
 ## Implementation Details
 
 **This project utilizes the following technologies:**

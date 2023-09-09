@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 
 import { Layout } from "./components/Layout/Layout.tsx";
 
@@ -17,19 +16,15 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/patients",
-        element: <Patients />,
-      },
-      {
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/patients",
+        element: <Patients />,
+      },
     ],
   },
-  // {
-  //   path: "/patients",
-  //   element: <Patients />,
-  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

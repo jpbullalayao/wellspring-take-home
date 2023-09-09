@@ -1,28 +1,13 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
+import React from "react";
 
 import { PageTitle } from "../../components/PageTitle/PageTitle.tsx";
 import { PatientItem } from "../../components/PatientItem/PatientItem.tsx";
 import { Widget } from "../../components/Widget/Widget.tsx";
 
+import { useData } from "../../hooks/useData/useData.ts";
+
 export const Patients = () => {
-  const [patients, setPatients] = useState([]);
-
-  const fetchPatients = async () => {
-    // TODO: Handle exceptions
-    const response = await axios.get("/api/patients");
-    return response.data;
-  };
-
-  useEffect(() => {
-    const getPatients = async () => {
-      const patients = await fetchPatients();
-      setPatients(patients);
-    };
-
-    getPatients();
-  }, []);
+  const patients = useData("/api/patients");
 
   return (
     <>
