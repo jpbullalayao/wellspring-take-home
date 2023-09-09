@@ -17,9 +17,9 @@ Afterwards, open your web browser and navigate to http://localhost:3000 to view 
 
 1. React
 2. TypeScript (tsconfig not setup, but TS syntax was used)
-3. A personal [styled-components UI library](https://github.com/jpbullalayao/ragna-lerna) to build out and style the necessary UI
+3. [vanilla-extract-css](https://vanilla-extract.style/) to build out and style the necessary UI
 
-Using [styled-components](https://styled-components.com) + [styled-system](https://github.com/styled-system/styled-system) to build the UI is a personal preference for my own projects, as it has been much easier and faster to build complex UIs by using a CSS-in-JS solution. However, I am fully experienced with pure HTML/CSS solutions where the styles would be in their own separate `.css` files for each component. Should Wellspring use a pure CSS solution in their projects, I would easily be able to work within that as well.
+Before using vanilla-extract-css for this project, I originally used [styled-components](https://styled-components.com) + [styled-system](https://github.com/styled-system/styled-system) to build the UI as it was personal preference for my own projects, because it has been much easier and faster to build complex UIs by using a CSS-in-JS solution. However, given that styled-system is not actively maintained anymore, I migrated to the usage of a more modern solution in vanilla-extract-css. I am fully experienced with pure HTML/CSS solutions such as this where the styles would be in their own separate `.css` files for each component. Should Wellspring use a pure CSS solution in their projects, I would easily be able to work within that, as well as any project that may use styled-components.
 
 **This project uses the following note-worthy libraries / concepts as part of the implementation:**
 
@@ -61,7 +61,7 @@ At the moment, there are no analytics and production monitoring tools setup for 
 
 For production monitoring, we could setup [Sentry](https://sentry.io/) on the project so that we can catch JavaScript errors in a production environment. For tracking user activity and how flows perform in the project, we could setup something like [Segment](https://segment.com/) for event and other data tracking.
 
-### 3. Usage of theme libraries
+### 3. Usage of theme objects
 
 Ideally, engineers and designers should be working off the same UI brand guidelines, and there are ways to set up a theme that engineers can easily build their UIs with.
 

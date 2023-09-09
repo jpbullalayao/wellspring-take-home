@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { Outlet } from "react-router-dom";
 
@@ -10,9 +10,7 @@ import { SidebarItem } from "../SidebarItem/SidebarItem.tsx";
 
 import { main, list, listItem, rightContainer } from "./Layout.css.ts";
 
-interface Props {
-  children: ReactNode;
-}
+interface Props {}
 
 export const navItems = [
   {
@@ -29,7 +27,7 @@ export const navItems = [
   },
 ];
 
-export const Layout: React.FC<Props> = ({ children }) => (
+export const Layout: React.FC<Props> = () => (
   <div className={main}>
     <div
       style={{
