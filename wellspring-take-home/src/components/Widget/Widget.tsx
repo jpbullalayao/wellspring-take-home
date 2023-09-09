@@ -1,8 +1,11 @@
 import React, { ReactNode } from "react";
 
-import { Box } from "@professorragna/box";
-import { Flex } from "@professorragna/flex";
-import { H2 } from "@professorragna/h2";
+import {
+  main,
+  headerContainer,
+  headerText as headerTextCSS,
+  bodyContainer,
+} from "./Widget.css.ts";
 
 interface Props {
   actions?: ReactNode;
@@ -16,25 +19,12 @@ export const Widget: React.FC<Props> = ({
   headerText,
   ...props
 }) => (
-  <Box
-    borderRadius="20px"
-    border="1px solid #f2f4f7"
-    boxShadow="0px 3px 10px 0px #EEF2F8"
-    p="30px"
-    flex={1}
-    {...props}
-  >
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      borderBottom="3px solid #e0f2fe"
-    >
-      <H2 fontSize="18px" color="#344054">
-        {headerText}
-      </H2>
+  <div className={main} {...props}>
+    <div className={headerContainer}>
+      <h2 className={headerTextCSS}>{headerText}</h2>
 
       {actions}
-    </Flex>
-    <Box pt="20px">{children}</Box>
-  </Box>
+    </div>
+    <div className={bodyContainer}>{children}</div>
+  </div>
 );

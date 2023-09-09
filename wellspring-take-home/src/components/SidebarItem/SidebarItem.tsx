@@ -2,8 +2,7 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import { Flex } from "@professorragna/flex";
-import { Span } from "@professorragna/span";
+import { main, labelContainer } from "./SidebarItem.css.ts";
 
 interface Props {
   iconAlt: string;
@@ -30,15 +29,10 @@ export const SidebarItem: React.FC<Props> = ({
   >
     {/* Built-in children prop for NavLink allows us to style the active link however we like */}
     {({ isActive }) => (
-      <Flex
-        borderRadius="8px"
-        p="15px"
-        bg={isActive ? "#daf1ff" : ""}
-        {...props}
-      >
+      <div className={isActive ? main.active : main.inactive} {...props}>
         <img src={iconUrl} alt={iconAlt} />
-        <Span ml="15px">{label}</Span>
-      </Flex>
+        <span className={labelContainer}>{label}</span>
+      </div>
     )}
   </NavLink>
 );

@@ -1,10 +1,17 @@
 import React from "react";
 
-import { Box } from "@professorragna/box";
-import { Flex } from "@professorragna/flex";
-import { Image } from "@professorragna/image";
-
 import iconKebab from "../../assets/icon-kebab.svg";
+
+import {
+  main,
+  detailsContainer,
+  timeContainer,
+  locationContainer,
+  rightContainer,
+  image,
+  nameContainer,
+  descContainer,
+} from "./Appointment.css.ts";
 
 interface StyleProps {
   locationColor: string;
@@ -29,26 +36,35 @@ export const Appointment: React.FC<Props> = ({
   appointmentDescription,
   styleProps: { detailsBg, locationColor, mb } = {},
 }) => (
-  <Flex borderRadius="15px" overflow="hidden" mb={mb}>
-    <Box bg={detailsBg} p="15px" minWidth="90px" textAlign="center">
-      <Box color="#fff" fontSize="16px" fontWeight="700">
-        {time}
-      </Box>
-      <Box color={locationColor} fontSize="12px" fontWeight="500">
+  <div
+    className={main}
+    style={{
+      marginBottom: mb,
+    }}
+  >
+    <div
+      className={detailsContainer}
+      style={{
+        background: detailsBg,
+      }}
+    >
+      <div className={timeContainer}>{time}</div>
+      <div className={locationContainer} style={{ color: locationColor }}>
         {appointmentType}
-      </Box>
-    </Box>
-    <Box alignItems="center" bg="#f8f9fc" p="15px" width="100%">
-      <Box position="relative">
-        <Image src={iconKebab} alt="Kebab icon" position="absolute" right="0" />
-        <Box
-          fontSize="14px"
-          fontWeight="700"
-        >{`${appointmentName}: ${patientName}`}</Box>
-        <Box color="#667085" fontSize="12px">
-          {appointmentDescription}
-        </Box>
-      </Box>
-    </Box>
-  </Flex>
+      </div>
+    </div>
+    <div className={rightContainer}>
+      <div
+        style={{
+          position: "relative",
+        }}
+      >
+        <img src={iconKebab} alt="Kebab icon" className={image} />
+        <div
+          className={nameContainer}
+        >{`${appointmentName}: ${patientName}`}</div>
+        <div className={descContainer}>{appointmentDescription}</div>
+      </div>
+    </div>
+  </div>
 );

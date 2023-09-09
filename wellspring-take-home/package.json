@@ -4,17 +4,10 @@
   "proxy": "http://localhost:3001",
   "private": true,
   "dependencies": {
-    "@professorragna/box": "^1.0.4",
-    "@professorragna/button": "^1.0.4",
-    "@professorragna/flex": "^1.0.4",
-    "@professorragna/h1": "^1.0.4",
-    "@professorragna/h2": "^1.0.4",
-    "@professorragna/image": "^1.0.4",
-    "@professorragna/list": "^1.0.4",
-    "@professorragna/span": "^1.0.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vanilla-extract/css": "^1.13.0",
     "axios": "^1.5.0",
     "concurrently": "^8.0.1",
     "react": "^18.2.0",
@@ -26,9 +19,9 @@
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:react\"",
     "start:server": "cd server && node server.js",
-    "start:react": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start:react": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,6 +43,8 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@vanilla-extract/webpack-plugin": "^2.3.0",
     "styled-components": "^6.0.7",
     "styled-system": "^5.1.5"
   }

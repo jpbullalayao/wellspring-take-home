@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { NavLink } from "react-router-dom";
 
-import { Box } from "@professorragna/box";
-import { Flex } from "@professorragna/flex";
-
 import { Appointment } from "../../components/Appointment/Appointment.tsx";
 import { Filter } from "../../components/Filter/Filter.tsx";
 import { PageTitle } from "../../components/PageTitle/PageTitle.tsx";
@@ -15,6 +12,8 @@ import { useData } from "../../hooks/useData/useData.ts";
 
 import { Patient } from "../../interfaces/api/patient/patient.ts";
 import { Appointment as AppointmentInterface } from "../../interfaces/api/appointment/appointment.ts";
+
+import { main, appointmentsContainer } from "./Home.css.ts";
 
 const appointmentStyles = {
   Telehealth: {
@@ -76,12 +75,7 @@ export const Home = () => {
       {/* Typically, in a production app, you'd access your application state to determine what user firstName to render below */}
       <PageTitle title="Good afternoon, Dwight!" />
 
-      <Flex
-        style={{
-          // Hardcoded style here, as my external styled components don't yet support a "gap" prop
-          gap: "50px",
-        }}
-      >
+      <div className={main}>
         <Widget
           actions={
             <NavLink
@@ -96,7 +90,9 @@ export const Home = () => {
             </NavLink>
           }
           headerText="Recent Patients"
-          alignSelf="flex-start"
+          style={{
+            alignSelf: "flex-start",
+          }}
         >
           {patients.length <= 0 ? (
             <>No patients on file</>
@@ -113,7 +109,12 @@ export const Home = () => {
           )}
         </Widget>
 
-        <Widget headerText="Upcoming visits" alignSelf="flex-start">
+        <Widget
+          headerText="Upcoming visits"
+          style={{
+            alignSelf: "flex-start",
+          }}
+        >
           <Filter
             label={AppointmentFilter.Today}
             onClick={() => {
@@ -126,7 +127,9 @@ export const Home = () => {
               setActiveAppointmentFilter(AppointmentFilter.Today);
             }}
             isActive={isActiveFilter(AppointmentFilter.Today)}
-            mr="10px"
+            style={{
+              marginRight: "10px",
+            }}
           />
 
           <Filter
@@ -151,7 +154,9 @@ export const Home = () => {
               setActiveAppointmentFilter(AppointmentFilter.Tomorrow);
             }}
             isActive={isActiveFilter(AppointmentFilter.Tomorrow)}
-            mr="10px"
+            style={{
+              marginRight: "10px",
+            }}
           />
 
           <Filter
@@ -179,7 +184,7 @@ export const Home = () => {
             isActive={isActiveFilter(AppointmentFilter.ThisWeek)}
           />
 
-          <Box mt="30px">
+          <div className={appointmentsContainer}>
             {filteredAppointments.length <= 0 ? (
               <>No upcoming appointments</>
             ) : (
@@ -199,9 +204,9 @@ export const Home = () => {
                 ))}
               </>
             )}
-          </Box>
+          </div>
         </Widget>
-      </Flex>
+      </div>
     </>
   );
 };

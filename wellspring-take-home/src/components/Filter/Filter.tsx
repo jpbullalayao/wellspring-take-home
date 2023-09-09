@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "../../core-components/Button/Button.tsx";
+import { main } from "./Filter.css.ts";
 
 interface Props {
   label: string;
@@ -14,21 +14,11 @@ export const Filter: React.FC<Props> = ({
   onClick,
   ...props
 }) => (
-  <Button
+  <button
     onClick={onClick}
-    border="none"
-    borderRadius="16px"
-    fontSize="14px"
-    fontWeight="500"
-    outline="none"
-    p="4px 6px"
-    bg={isActive ? "#f0f9ff" : "#f2f4f7"}
-    color={isActive ? "#026aa2" : "#344054"}
-    style={{
-      cursor: "pointer",
-    }}
+    className={isActive ? main.active : main.inactive}
     {...props}
   >
     {label}
-  </Button>
+  </button>
 );
