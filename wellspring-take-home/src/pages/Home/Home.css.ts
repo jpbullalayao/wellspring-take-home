@@ -4,3 +4,7 @@ export const main = style({
   display: "flex",
   gap: "50px",
 });
+
+export const appointmentsContainer = style({
+  marginTop: "30px",
+});
