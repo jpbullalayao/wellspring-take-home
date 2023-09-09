@@ -29,7 +29,7 @@ Using [styled-components](https://styled-components.com) + [styled-system](https
 
 ## Improvements
 
-Assuming that this were to be a full production application, there improvements / additions that could be made to the project. Some of this includes:
+Assuming that this were to be a full production application, there are improvements / additions that could be made to the project. Some of this includes:
 
 ### 1. Path alias imports
 
